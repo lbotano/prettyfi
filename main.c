@@ -107,8 +107,8 @@ void setColSize(char* arg) {
     }
 }
 
-void analyzeArguments(char* argv[]) {
-    if (strcmp(argv[1], "-h") == 0 || strcmp(argv[1], "--help") == 0)
+void analyzeArguments(char* argv[], int argc) {
+    if (argc <= 1 || strcmp(argv[1], "-h") == 0 || strcmp(argv[1], "--help") == 0)
         help();
 
     int i = 2;
@@ -131,7 +131,7 @@ void analyzeArguments(char* argv[]) {
 int main(int argc, char* argv[]){
     lines = (node_t*) malloc(sizeof(node_t));
 
-    analyzeArguments(argv);
+    analyzeArguments(argv, argc);
     fileToList(argv[1], lines);
     putBreakpoints(lines);
     listToFile(lines, argv[1]);
