@@ -60,12 +60,12 @@ void printList(node_t* list) {
 }
 
 // Puts a string2 in the middle of string1 at pos
-void putStringMiddle(char* string1, char* string2, int pos, char** dest) {
+void putStringMiddle(char* string1, char* string2, int pos, int offset, char** dest) {
     char *result = malloc(sizeof(char) * (strlen(string1) + strlen(string2)) + 1);
     *result = '\0';
     strncat(result, string1, pos);
     strcat(result, string2);
-    strcat(result, string1 + pos + 1);
+    strcat(result, string1 + pos + offset);
     
     *dest = result;
 }
