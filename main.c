@@ -12,8 +12,6 @@ char *prepend = "";
 
 node_t* lines;
 
-
-
 // Puts breaklines in strings of a given list.
 void putBreaklines(node_t* list) {
     node_t* currentNode = list;
@@ -42,20 +40,18 @@ void putBreaklines(node_t* list) {
         while (currentNode->val[breaklinePos] != '\0') {
             if (currentNode->val[breaklinePos] == ' ' && breaklinePos - lastBl >= colSize) {
                 lastBl = breaklinePos + tabSize;
+                char *tabResult;
                 if (doTab) {
                     // Add tabs
-                    char *tabResult;
                     putStringMiddle(currentNode->val, tab, breaklinePos, 1, &tabResult);
-                    strcpy(currentNode->val, tabResult);
                 } else {
                     currentNode->val[breaklinePos] = '\n';
                     char toPrepend[strlen(prepend) + 2];
                     strcpy(toPrepend, "\n");
                     strcat(toPrepend, prepend);
-                    char *tabResult;
                     putStringMiddle(currentNode->val, toPrepend, breaklinePos, 1, &tabResult);
-                    strcpy(currentNode->val, tabResult);
                 }
+                strcpy(currentNode->val, tabResult);
 
                 if (breaklinePos + colSize + tabSize < lineLen)
                     breaklinePos += colSize + tabSize;
