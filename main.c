@@ -114,29 +114,23 @@ void analyzeArguments(char* argv[], int argc) {
     int i = 2;
     char* arg = argv[i];
     while (arg != NULL) {
-        int argLength = 1;
         if (strcmp(arg, "-c") == 0) {
-            argLength = 2;
-            setColSize(argv[i + 1]);
+            setColSize(argv[++i]);
         } else if (strcmp(arg, "-t") == 0) {
             doTab = 1;
         } else if (strcmp(arg, "-p") == 0) {
-            argLength = 2;
-            prepend = argv[i + 1]; 
+            prepend = argv[++i]; 
         } else if (strcmp(arg, "-f") == 0) {
-            // TODO: Use argv[++i] instead of argLength
-            argLength = 2;
-            sscanf(argv[i + 1], "%i", &firstLine);
+            sscanf(argv[++i], "%i", &firstLine);
             firstLine--;
         } else if (strcmp(arg, "-l") == 0) {
-            argLength = 2;
-            sscanf(argv[i + 1], "%i", &lastLine);
+            sscanf(argv[++i], "%i", &lastLine);
             lastLine--;
         } else {
             printf("Invalid argument: %s\n", arg);
             exit(EXIT_FAILURE);
         }
-        i += argLength;
+        i++;
         arg = argv[i];
     }
 }
