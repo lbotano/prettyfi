@@ -31,14 +31,21 @@ void putBreaklines(node_t* list) {
             }
             sprintf(tab, "%s%s", tab, prepend);
             tab[tabSize + strlen(prepend) + 2] = '\0';
+        } else {
+            tabSize = strlen(prepend);
         }
         
         int i = 1;
-        int breaklinePos = colSize + tabSize;
-        int lastBl = 0; // Last breakline
+        int breaklinePos = tabSize;
+        int lastBl = tabSize; // Last breakline
         int lineLen = strlen(currentNode->val);
+        int lastSpace = 0;
         while (currentNode->val[breaklinePos] != '\0') {
-            if (currentNode->val[breaklinePos] == ' ' && breaklinePos - lastBl >= colSize) {
+            if (currentNode->val[breaklinePos] == ' ') {
+                lastSpace = breaklinePos;
+            }
+            if (breaklinePos - lastBl >= colSize) {
+                breaklinePos = lastSpace;
                 lastBl = breaklinePos + tabSize;
                 char *tabResult;
                 if (doTab) {
@@ -53,11 +60,9 @@ void putBreaklines(node_t* list) {
                 }
                 strcpy(currentNode->val, tabResult);
 
-                if (breaklinePos + colSize + tabSize < lineLen)
-                    breaklinePos += colSize + tabSize;
-            } else {
-                breaklinePos++;
+                breaklinePos += tabSize;
             }
+            breaklinePos++;
         }
 
         if (currentNode->next == NULL) break;
