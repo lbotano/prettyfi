@@ -1,4 +1,8 @@
 #include <string.h>
+#include <stdio.h>
+#include <stdlib.h>
+#include <errno.h>
+#include <inttypes.h>
 
 #define LINE_MAX_SIZE 50000
 

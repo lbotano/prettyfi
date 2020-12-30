@@ -24,26 +24,30 @@ void putBreaklines(node_t* list) {
         if (lineNumber >= firstLine) {
             // Check how many tabs or spaces to put for each line
             int tabSize = strlen(prepend);
-                for (int i = 0; currentNode->val[i] == '\0' || currentNode->val[i] == '\n' || currentNode->val[i] == ' ' || currentNode->val[i] == '\t'; i++) {
-                    tabSize++;
-                }
-                char tab[tabSize + 2]; // +2 because of \n and \0
-                memset(tab, 0, tabSize + 2 * sizeof(char));
-                tab[0] = '\n';
+            for (int i = 0;
+                currentNode->val[i] == '\0' ||
+                currentNode->val[i] == '\n' ||
+                currentNode->val[i] == ' ' ||
+                currentNode->val[i] == '\t'; i++) {
+                tabSize++;
+            }
+            char tab[tabSize + 2]; // +2 because of \n and \0
+            memset(tab, 0, tabSize + 2 * sizeof(char));
+            tab[0] = '\n';
             if (doTab) {
                 for (int i = 1; i < tabSize + 1 - strlen(prepend); i++) {
                     tab[i] = currentNode->val[i - 1];
                 }
-                sprintf(tab, "%s%s", tab, prepend);
+                char tmp[strlen(tab) + strlen(prepend) + 1];
+                sprintf(tmp, "%s%s", tab, prepend);
+                strcpy(tab, tmp);
                 tab[tabSize + strlen(prepend) + 2] = '\0';
             } else {
                 tabSize = strlen(prepend);
             }
             
-            int i = 1;
             int breaklinePos = tabSize;
             int lastBl = tabSize; // Last breakline
-            int lineLen = strlen(currentNode->val);
             int lastSpace = 0;
             while (currentNode->val[breaklinePos] != '\0') {
                 if (currentNode->val[breaklinePos] == ' ') {
